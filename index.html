@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kamura: ropa y perfumería seleccionada para todos los días.">
+    <title>KAMURA | Ropa & perfumería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #172229;
+            --muted: #667277;
+            --paper: #f7f3ee;
+            --white: #fffdf9;
+            --coral: #d96d58;
+            --coral-dark: #a9473b;
+            --sage: #dce5dc;
+            --line: #ddd8d0;
+            --serif: "Playfair Display", Georgia, serif;
+            --sans: "DM Sans", sans-serif;
+        }
 
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+        button, input { font: inherit; }
+        button { cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        .announcement { background: var(--ink); color: #fff; padding: 10px 24px; text-align: center; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+        header { background: var(--white); border-bottom: 1px solid var(--line); }
+        .nav { align-items: center; display: flex; gap: 34px; justify-content: space-between; margin: auto; max-width: 1240px; padding: 22px 28px; }
+        .brand { font-size: 23px; font-weight: 700; letter-spacing: .18em; }
+        .nav-links { display: flex; gap: 28px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--coral-dark); }
+        .nav-actions { align-items: center; display: flex; gap: 12px; }
+        .icon-button { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); display: grid; height: 40px; place-items: center; position: relative; width: 40px; }
+        .icon-button:hover { background: var(--sage); }
+        .cart-count { align-items: center; background: var(--coral); border-radius: 50%; color: #fff; display: flex; font-size: 10px; height: 17px; justify-content: center; position: absolute; right: -4px; top: -5px; width: 17px; }
+        .hero { display: grid; grid-template-columns: 1fr 1fr; margin: 0 auto; max-width: 1240px; min-height: 590px; padding: 34px 28px 74px; }
+        .hero-copy { align-self: center; padding: 25px 8% 25px 3%; }
+        .eyebrow { color: var(--coral-dark); font-size: 12px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 { font-family: var(--serif); font-size: clamp(50px, 7vw, 92px); font-weight: 500; letter-spacing: -.04em; line-height: .95; margin: 23px 0; max-width: 600px; }
+        .hero-copy p { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 430px; }
+        .primary-button { background: var(--coral); border: 0; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .12em; padding: 16px 24px; text-transform: uppercase; transition: background .2s, transform .2s; }
+        .primary-button:hover { background: var(--coral-dark); transform: translateY(-2px); }
+        .hero-visual { min-height: 490px; overflow: hidden; position: relative; }
+        .hero-visual img { height: 100%; object-fit: cover; object-position: center; width: 100%; }
+        .hero-tag { background: var(--white); bottom: 26px; left: 26px; padding: 16px 20px; position: absolute; }
+        .hero-tag strong { display: block; font-family: var(--serif); font-size: 22px; font-weight: 500; }
+        .hero-tag span { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+        .category-strip { background: var(--sage); display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 max(28px, calc((100% - 1184px) / 2)); }
+        .category { border-right: 1px solid rgba(23,34,41,.18); padding: 29px 34px; text-align: center; }
+        .category:last-child { border: 0; }
+        .category span { color: var(--muted); display: block; font-size: 11px; letter-spacing: .12em; margin-bottom: 6px; text-transform: uppercase; }
+        .category strong { font-family: var(--serif); font-size: 26px; font-weight: 500; }
+        .section { margin: auto; max-width: 1240px; padding: 92px 28px; }
+        .section-head { align-items: end; display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .section h2 { font-family: var(--serif); font-size: clamp(36px, 5vw, 54px); font-weight: 500; letter-spacing: -.035em; margin-bottom: 0; }
+        .text-link { border-bottom: 1px solid var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .08em; padding-bottom: 5px; text-transform: uppercase; }
+        .filters { display: flex; gap: 8px; margin-bottom: 26px; overflow-x: auto; padding-bottom: 4px; }
+        .filter { background: transparent; border: 1px solid var(--line); color: var(--muted); font-size: 12px; padding: 10px 15px; white-space: nowrap; }
+        .filter.active, .filter:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+        .products { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); }
+        .product { min-width: 0; }
+        .product-image { background: #e9e4dc; overflow: hidden; position: relative; }
+        .product-image img { aspect-ratio: .82; display: block; object-fit: cover; transition: transform .45s; width: 100%; }
+        .product:hover img { transform: scale(1.04); }
+        .badge { background: var(--white); font-size: 10px; left: 12px; letter-spacing: .1em; padding: 7px 9px; position: absolute; text-transform: uppercase; top: 12px; }
+        .product-info { padding-top: 15px; }
+        .product-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 7px; }
+        .product-info p { color: var(--muted); font-size: 13px; margin-bottom: 11px; }
+        .product-row { align-items: center; display: flex; justify-content: space-between; }
+        .price { font-size: 14px; font-weight: 700; }
+        .add { background: none; border: 0; border-bottom: 1px solid var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 3px 0; text-transform: uppercase; }
+        .add:hover { color: var(--coral-dark); border-color: var(--coral-dark); }
+        .story { background: var(--ink); color: #fff; display: grid; grid-template-columns: .9fr 1.1fr; margin: auto; max-width: 1240px; min-height: 410px; }
+        .story-image { min-height: 340px; }
+        .story-image img { height: 100%; object-fit: cover; width: 100%; }
+        .story-copy { align-self: center; padding: 55px 10%; }
+        .story-copy .eyebrow { color: #df9586; }
+        .story-copy h2 { font-family: var(--serif); font-size: clamp(35px, 5vw, 57px); font-weight: 500; letter-spacing: -.035em; line-height: 1; margin: 17px 0; }
+        .story-copy p { color: #c6ced0; font-size: 15px; line-height: 1.7; max-width: 430px; }
+        footer { background: var(--white); margin-top: 92px; padding: 50px 28px 28px; }
+        .footer-inner { display: flex; gap: 30px; justify-content: space-between; margin: auto; max-width: 1184px; }
+        .footer-brand { font-size: 20px; font-weight: 700; letter-spacing: .18em; }
+        .footer-note { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 13px; max-width: 270px; }
+        .footer-links { display: flex; gap: 60px; }
+        .footer-links h3 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+        .footer-links a { color: var(--muted); display: block; font-size: 13px; margin: 12px 0; }
+        .copyright { border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; margin: 45px auto 0; max-width: 1184px; padding-top: 18px; }
+        .toast { background: var(--ink); bottom: 24px; color: #fff; left: 50%; opacity: 0; padding: 13px 19px; pointer-events: none; position: fixed; transform: translate(-50%, 15px); transition: opacity .25s, transform .25s; z-index: 3; }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+        @media (max-width: 760px) {
+            .nav { padding: 18px 20px; }
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 35px 20px 50px; }
+            .hero-copy { padding: 15px 0 42px; }
+            .hero-visual { min-height: 430px; }
+            .category-strip { grid-template-columns: 1fr; padding: 0 20px; }
+            .category { border-bottom: 1px solid rgba(23,34,41,.18); border-right: 0; padding: 20px; }
+            .section { padding: 62px 20px; }
+            .section-head { align-items: start; display: block; }
+            .section-head .text-link { display: inline-block; margin-top: 15px; }
+            .products { grid-template-columns: repeat(2, 1fr); row-gap: 33px; }
+            .story { grid-template-columns: 1fr; margin: 0 20px; }
+            .story-image { min-height: 270px; }
+            .story-copy { padding: 38px 26px 45px; }
+            footer { margin-top: 60px; padding: 42px 20px 25px; }
+            .footer-inner { display: block; }
+            .footer-links { gap: 30px; margin-top: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="announcement">Envío gratis en pedidos superiores a 75 € · Entrega en 24/48 h</div>
+    <header>
+        <nav class="nav" aria-label="Navegación principal">
+            <a class="brand" href="#inicio">KAMURA</a>
+            <div class="nav-links">
+                <a href="#coleccion">Colección</a>
+                <a href="#perfumeria">Perfumería</a>
+                <a href="#historia">La marca</a>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-button" aria-label="Buscar">⌕</button>
+                <button class="icon-button" aria-label="Ver carrito">♧<span class="cart-count">0</span></button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="inicio">
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="eyebrow">Nueva temporada · 2026</span>
+                <h1>Lo que llevas dice quién eres.</h1>
+                <p>Prendas con carácter y aromas que se quedan contigo. Una selección honesta para vestir tus días a tu manera.</p>
+                <a class="primary-button" href="#coleccion">Descubrir colección</a>
+            </div>
+            <div class="hero-visual">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1100&q=85" alt="Selección de ropa en una tienda">
+                <div class="hero-tag"><strong>Esencial, pero especial.</strong><span>Prendas que hacen la diferencia</span></div>
+            </div>
+        </section>
+
+        <section class="category-strip" aria-label="Categorías">
+            <a class="category" href="#coleccion"><span>01 / Vestir</span><strong>Ropa con intención</strong></a>
+            <a class="category" href="#perfumeria"><span>02 / Oler</span><strong>Aromas con memoria</strong></a>
+            <a class="category" href="#historia"><span>03 / Conocer</span><strong>Hecho para durar</strong></a>
+        </section>
+
+        <section class="section" id="coleccion">
+            <div class="section-head"><h2>Favoritos de Kamura</h2><a class="text-link" href="#coleccion">Ver todo</a></div>
+            <div class="filters" role="group" aria-label="Filtrar productos">
+                <button class="filter active" data-filter="all">Todo</button><button class="filter" data-filter="ropa">Ropa</button><button class="filter" data-filter="perfume">Perfumería</button>
+            </div>
+            <div class="products">
+                <article class="product" data-category="ropa"><div class="product-image"><img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80" alt="Camisa de lino beige"><span class="badge">Nuevo</span></div><div class="product-info"><h3>Camisa Lino Nube</h3><p>Algodón y lino · Natural</p><div class="product-row"><span class="price">59,90 €</span><button class="add">Añadir</button></div></div></article>
+                <article class="product" data-category="ropa"><div class="product-image"><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=700&q=80" alt="Chaqueta marrón de corte clásico"><span class="badge">Esencial</span></div><div class="product-info"><h3>Chaqueta Campo</h3><p>Sarga de algodón · Oliva</p><div class="product-row"><span class="price">89,00 €</span><button class="add">Añadir</button></div></div></article>
+                <article class="product" data-category="perfume" id="perfumeria"><div class="product-image"><img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=700&q=80" alt="Frasco de perfume sobre una mesa"><span class="badge">Bestseller</span></div><div class="product-info"><h3>Ámbar 07</h3><p>Eau de parfum · 50 ml</p><div class="product-row"><span class="price">48,00 €</span><button class="add">Añadir</button></div></div></article>
+                <article class="product" data-category="perfume"><div class="product-image"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80" alt="Perfume de frasco transparente"><span class="badge">Nuevo</span></div><div class="product-info"><h3>Bruma Santal</h3><p>Eau de parfum · 30 ml</p><div class="product-row"><span class="price">36,00 €</span><button class="add">Añadir</button></div></div></article>
+            </div>
+        </section>
+
+        <section class="story" id="historia">
+            <div class="story-image"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=85" alt="Persona con un conjunto de ropa neutro"></div>
+            <div class="story-copy"><span class="eyebrow">Nuestra forma de hacer</span><h2>Menos ruido.<br>Más tú.</h2><p>Elegimos materiales agradables, siluetas que respiran y perfumes que cuentan historias. Kamura es una pausa para escoger mejor.</p><a class="text-link" style="border-color:#fff;color:#fff" href="#coleccion">Conoce Kamura</a></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner"><div><div class="footer-brand">KAMURA</div><p class="footer-note">Ropa y perfumería para una vida con más intención.</p></div><div class="footer-links"><div><h3>Ayuda</h3><a href="#">Envíos y devoluciones</a><a href="#">Guía de tallas</a></div><div><h3>Contacto</h3><a href="mailto:hola@kamura.es">hola@kamura.es</a><a href="#">Instagram</a></div></div></div>
+        <div class="copyright">© 2026 Kamura Studio · Hecho para quedarse</div>
+    </footer>
+    <div class="toast" role="status">Añadido al carrito</div>
+    <script>
+        const count = document.querySelector('.cart-count');
+        const toast = document.querySelector('.toast');
+        let cartItems = 0;
+        document.querySelectorAll('.add').forEach((button) => button.addEventListener('click', () => {
+            cartItems += 1;
+            count.textContent = cartItems;
+            toast.classList.add('show');
+            window.setTimeout(() => toast.classList.remove('show'), 1800);
+        }));
+        document.querySelectorAll('.filter').forEach((filterButton) => filterButton.addEventListener('click', () => {
+            document.querySelectorAll('.filter').forEach((button) => button.classList.remove('active'));
+            filterButton.classList.add('active');
+            const selected = filterButton.dataset.filter;
+            document.querySelectorAll('.product').forEach((product) => {
+                product.hidden = selected !== 'all' && product.dataset.category !== selected;
+            });
+        }));
+    </script>
+</body>
+</html>
